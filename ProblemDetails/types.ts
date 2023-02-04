@@ -21,11 +21,12 @@ export type ProblemDetailFactory<
   STATUS extends number,
   TYPE extends string,
   TITLE extends string,
-  DATA = undefined
-> = (
-  ...optionalFactoryProps: DATA extends undefined
+  DATA = undefined,
+  GENERATOR_PROPS extends unknown[] = DATA extends undefined
     ? [factoryProps?: ProblemDetailFactoryProps<DATA>]
     : [factoryProps: ProblemDetailFactoryProps<DATA>]
+> = (
+  ...optionalFactoryProps: GENERATOR_PROPS
 ) => ProblemDetail<STATUS, TYPE, TITLE, DATA>;
 
 export type ProblemDetailFactoryCollection<
@@ -33,11 +34,23 @@ export type ProblemDetailFactoryCollection<
   STATUS extends number,
   TYPE extends string,
   TITLE extends string,
-  DATA = undefined
-> = { [key in KEY]: ProblemDetailFactory<STATUS, TYPE, TITLE, DATA> };
+  DATA = undefined,
+  GENERATOR_PROPS extends unknown[] = DATA extends undefined
+    ? [factoryProps?: ProblemDetailFactoryProps<DATA>]
+    : [factoryProps: ProblemDetailFactoryProps<DATA>]
+> = {
+  [key in KEY]: ProblemDetailFactory<
+    STATUS,
+    TYPE,
+    TITLE,
+    DATA,
+    GENERATOR_PROPS
+  >;
+};
 
 export type InferProblemDetailsFromFactoryCollection<
   COLLECTION_TYPE extends ProblemDetailFactoryCollection<
+    any,
     any,
     any,
     any,

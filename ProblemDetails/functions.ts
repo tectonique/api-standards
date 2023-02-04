@@ -10,27 +10,34 @@ export function createProblemDetailFactory<
   STATUS extends number,
   TYPE extends string,
   TITLE extends string,
-  DATA = undefined
+  DATA = undefined,
+  GENERATOR_PROPS extends unknown[] = DATA extends undefined
+    ? [factoryProps?: ProblemDetailFactoryProps<DATA>]
+    : [factoryProps: ProblemDetailFactoryProps<DATA>]
 >(props: {
   type: TYPE;
   status: STATUS;
   title: TITLE;
   dataType?: DATA;
-}): ProblemDetailFactory<STATUS, TYPE, TITLE, DATA> {
+  generator?: (
+    ...generatorProps: GENERATOR_PROPS
+  ) => ProblemDetailFactoryProps<DATA>;
+}): ProblemDetailFactory<STATUS, TYPE, TITLE, DATA, GENERATOR_PROPS> {
   return function (
-    ...optionalFactoryProps: DATA extends undefined
-      ? [factoryProps?: ProblemDetailFactoryProps<DATA>]
-      : [factoryProps: ProblemDetailFactoryProps<DATA>]
+    ...optionalFactoryProps: GENERATOR_PROPS
   ): ProblemDetail<STATUS, TYPE, TITLE, DATA> {
-    const [factoryProps] = optionalFactoryProps;
+    const finalFactoryProps: ProblemDetailFactoryProps<DATA> =
+      typeof props.generator === "function"
+        ? props.generator(...optionalFactoryProps)
+        : (optionalFactoryProps[0] as ProblemDetailFactoryProps<DATA>);
 
     return new ProblemDetailClazz(
       props.status,
       props.type,
       props.title,
       `urn:uuid:${uuidv4()}`,
-      factoryProps?.detail ?? props.title,
-      factoryProps?.data as DATA
+      finalFactoryProps?.detail ?? props.title,
+      finalFactoryProps?.data as DATA
     );
   };
 }
