@@ -2,7 +2,6 @@
   "compileOnSave": false,
   "compilerOptions": {
     "target": "es2016",
-    "lib": ["ESNext"],
     "module": "ESNext",
     "moduleResolution": "Node16",
     "outDir": "./dist/mjs",

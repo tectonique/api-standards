@@ -13,10 +13,16 @@ The library advocates:
 
 # Changelog
 
-| Version | Changes                           |
-|---------|-----------------------------------|
-| 0.0.2   | Support for both CommonJS and ESM |
-| 0.0.1   | Initial release                   |
+## 0.0.3
+- If ProblemDetail `DATA` type is `undefined`
+  - the `data` attribute of the ProblemDetail factory function can be omitted
+  - or even the complete factory function argument.
+
+## 0.0.2
+- Support for both CommonJS and ESM.
+
+## 0.0.1
+- Initial release.
 
 # Author
 

@@ -15,8 +15,7 @@ export type ProblemDetail<
 
 export type ProblemDetailFactoryProps<DATA = undefined> = {
   detail?: string;
-  data: DATA;
-};
+} & (DATA extends undefined ? { data?: undefined } : { data: DATA });
 
 export type ProblemDetailFactory<
   STATUS extends number,
@@ -24,7 +23,9 @@ export type ProblemDetailFactory<
   TITLE extends string,
   DATA = undefined
 > = (
-  generatorProps: ProblemDetailFactoryProps<DATA>
+  ...optionalFactoryProps: DATA extends undefined
+    ? [factoryProps?: ProblemDetailFactoryProps<DATA>]
+    : [factoryProps: ProblemDetailFactoryProps<DATA>]
 ) => ProblemDetail<STATUS, TYPE, TITLE, DATA>;
 
 export type ProblemDetailFactoryCollection<

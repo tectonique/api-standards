@@ -1,8 +1,4 @@
-export {
-  createProblemDetailFactory as define,
-  createProblemDetailFactoryCollection as collection,
-  mergeProblemDetailFactoryCollections as mergeCollections,
-} from "./functions";
+export { createProblemDetailFactory as define } from "./functions";
 
 export { InferProblemDetailsFromFactoryCollection as infer } from "./types";
 
@@ -13,7 +9,4 @@ export {
   ProblemDetailFactoryProps,
 } from "./types";
 
-export {
-  ProblemDetailClazz,
-  isProblemDetail as isInstance,
-} from "./helpers";
+export { ProblemDetailClazz, isProblemDetail as isInstance } from "./helpers";

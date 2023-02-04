@@ -1,7 +1,7 @@
 import { ProblemDetails } from "./index";
 
 const UntypedCollectionA = {
-  NotFound: ProblemDetails.define({ type: "not-found", title: "Not found", status: 404 }),
+  NotFound: ProblemDetails.define({ type: "not-found", title: "Not found", status: 404, dataType: {} as number }),
   Unauthorized: ProblemDetails.define({
     type: "unauthorized",
     title: "Unauthorized",
@@ -10,19 +10,29 @@ const UntypedCollectionA = {
 };
 
 const UntypedCollectionB = {
-  Test: ProblemDetails.define({ type: "test", title: "Test", status: 442 }),
+  Test: ProblemDetails.define({ type: "test", title: "Test", status: 442, }),
 };
 
-const collection = ProblemDetails.collection({
+const collection = {
   ...UntypedCollectionA,
   ...UntypedCollectionB,
-});
+}
 
-const testProblem = collection.NotFound({ detail: "asd", data: undefined });
+// Here you can see, that a `data` attribute is needed
+const testProblem1 = collection.NotFound({ detail: "PD 1", data: 1 });
+
+// If `dataType` is not used, `data` can be omitted ...
+// or even the complete object, as detail is also optional.
+const testProblem2 = collection.Test({ detail: "PD 2" });
+const testProblem3 = collection.Test();
+
+console.log("PD 1:", testProblem1)
+console.log("PD 2:", testProblem2)
+console.log("PD 3:", testProblem3)
 
 type ProblemDetailType = ProblemDetails.infer<typeof collection>;
 
-const genericallyTypedProblem = testProblem as ProblemDetailType;
+const genericallyTypedProblem = testProblem1 as ProblemDetailType;
 
 // Here you can see, that the `type` is strictly typed.
 if (genericallyTypedProblem.type === "not-found") {
