@@ -1,8 +1,8 @@
-import { pd } from "./index";
+import { ProblemDetails } from "./index";
 
 const UntypedCollectionA = {
-  NotFound: pd.define({ type: "not-found", title: "Not found", status: 404 }),
-  Unauthorized: pd.define({
+  NotFound: ProblemDetails.define({ type: "not-found", title: "Not found", status: 404 }),
+  Unauthorized: ProblemDetails.define({
     type: "unauthorized",
     title: "Unauthorized",
     status: 401,
@@ -10,17 +10,17 @@ const UntypedCollectionA = {
 };
 
 const UntypedCollectionB = {
-  Test: pd.define({ type: "test", title: "Test", status: 442 }),
+  Test: ProblemDetails.define({ type: "test", title: "Test", status: 442 }),
 };
 
-const collection = pd.collection({
+const collection = ProblemDetails.collection({
   ...UntypedCollectionA,
   ...UntypedCollectionB,
 });
 
 const testProblem = collection.NotFound({ detail: "asd", data: undefined });
 
-type ProblemDetailType = pd.infer<typeof collection>;
+type ProblemDetailType = ProblemDetails.infer<typeof collection>;
 
 const genericallyTypedProblem = testProblem as ProblemDetailType;
 

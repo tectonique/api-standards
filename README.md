@@ -1,9 +1,22 @@
 # API Standards
+
 This library provides utilities for creating end to end type safe APIs.
 
 The library advocates:
+
 - API response envelopes
 - Error handling with [RFC 7807 Problem Details 🔗](https://www.rfc-editor.org/rfc/rfc7807)
+
+# npmjs.com
+
+- https://www.npmjs.com/package/@tectonique/api-standards
+
+# Changelog
+
+| Version | Changes                           |
+|---------|-----------------------------------|
+| 0.0.2   | Support for both CommonJS and ESM |
+| 0.0.1   | Initial release                   |
 
 # Author
 
