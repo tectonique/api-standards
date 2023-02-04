@@ -72,3 +72,15 @@ if (genericallyTypedProblem.type === "not-found") {
     genericallyTypedProblem.data.squared
   );
 }
+
+// You can use ProblemDetail.isInstance to check
+// if a certain object is a ProblemDetail instance.
+console.log(
+  "Is problem detail 1? (should be true):",
+  ProblemDetails.isInstance(genericallyTypedProblem)
+);
+
+console.log(
+  "Is problem detail 2? (should be false):",
+  ProblemDetails.isInstance({})
+);
