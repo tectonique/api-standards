@@ -49,6 +49,20 @@ export function createInstanceWithInferredTypes<
   STATUS extends number,
   TYPE extends string,
   PAYLOAD = undefined
->(problemDetail: ProblemDetail<STATUS, TYPE, PAYLOAD>) {
-  return problemDetail;
+>(
+  problemDetail: Omit<ProblemDetail<STATUS, TYPE, PAYLOAD>, "instance">
+): ProblemDetail<STATUS, TYPE, PAYLOAD> {
+  return {
+    success: false,
+    status: problemDetail.status,
+    type: problemDetail.type,
+    title: problemDetail.title,
+    detail: problemDetail.detail,
+    instance: `urn:uuid:${uuidv4()}`,
+    ...({
+      payload: problemDetail.payload,
+    } as PAYLOAD extends undefined
+      ? { payload?: undefined }
+      : { payload: PAYLOAD }),
+  };
 }

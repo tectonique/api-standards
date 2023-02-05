@@ -1,5 +1,6 @@
 import { ProblemDetails, ResponseEnvelopes } from "./index";
 import { SuccessEnvelope } from "./ResponseEnvelopes";
+import { v4 as uuidv4 } from "uuid";
 
 const UntypedCollectionA = {
   NotFound: ProblemDetails.factory({
@@ -92,7 +93,6 @@ const nonFactoryProblemDetailInstance = ProblemDetails.create({
   type: "hello-world",
   title: "Hello World",
   detail: "Hello World",
-  instance: `urn:timestamp:${new Date().getTime()}`,
 });
 
 const thisHereIsTheLongForm: ProblemDetails.ProblemDetail<431, "hello-world"> =
@@ -102,7 +102,7 @@ const thisHereIsTheLongForm: ProblemDetails.ProblemDetail<431, "hello-world"> =
     type: "hello-world",
     title: "Hello World",
     detail: "Hello World",
-    instance: `urn:timestamp:${new Date().getTime()}`,
+    instance: `urn:uuid:${uuidv4()}`,
   };
 
 console.log(

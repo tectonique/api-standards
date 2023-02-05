@@ -6,6 +6,9 @@
 * [📜 Changelog](#-changelog)
 * [📖 Table of contents](#-table-of-contents)
 * [0.x.y](#0xy)
+  * [0.0.11](#0011)
+  * [0.0.10](#0010)
+  * [0.0.9](#009)
   * [0.0.8](#008)
   * [0.0.7](#007)
   * [0.0.6](#006)
@@ -17,6 +20,16 @@
 <!-- TOC -->
 
 # 0.x.y
+
+## 0.0.11
+- `ProblemDetails.create(data)` attribute `data` must not contain anymore an `instance` value. It's instead auto generated.
+
+## 0.0.10
+- Library now has a logo
+
+## 0.0.9
+- Minor changes in docs
+- Some package.json metadata
 
 ## 0.0.8
 - Removed `TITLE` generic type from ProblemDetails.

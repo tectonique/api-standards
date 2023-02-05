@@ -369,7 +369,6 @@ const nonFactoryProblemDetailInstance = ProblemDetails.create({
   type: "hello-world",
   title: "Hello World",
   detail: "Hello World",
-  instance: `urn:timestamp:${new Date().getTime()}`,
 });
 ```
 
@@ -383,6 +382,6 @@ const thisHereIsTheLongForm: ProblemDetails.ProblemDetail<
   status: 431,
   type: "hello-world",
   detail: "Hello World",
-  instance: `urn:timestamp:${new Date().getTime()}`,
+  instance: `urn:uuid:${uuidv4()}`,
 };
 ```
