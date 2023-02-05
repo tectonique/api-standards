@@ -1,3 +1,11 @@
+<p align="center">
+  <br>
+  <br>
+  <img src=".assets/logo.png" alt="Logo of library api-standards" width="400">
+  <br>
+  <br>
+</p>
+
 # 🌩 API Standards
 
 This library provides utilities for creating end to end type safe APIs.
