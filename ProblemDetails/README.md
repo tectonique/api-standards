@@ -1,6 +1,6 @@
 # ⚠️ Problem Details
 
-Problem Details are RFC that factorys a common data structure for errors
+Problem Details are RFC that factories a common data structure for errors
 occurring on the server side.
 
 The goal is to provide clients a clear way to handle errors – especially
@@ -62,14 +62,14 @@ type RfcProblemDetail = {
 
 This library adds two more fields:
 ```typescript
-type ProblemDetail<DATA> = RfcProblemDetail & {
+type ProblemDetail<..., PAYLOAD> = RfcProblemDetail & {
   // This makes it very easy for TypeScript
   // clients to distinguish between a 
   // Problem Detail or a success reponse envelope.
   success: false;
   
   // Optional payload.
-  data: DATA
+  payload: PAYLOAD
 }
 ```
 
@@ -220,7 +220,7 @@ export default {
     status: 422,
     type: "invalid-data",
     title: "Invalid data",
-    dataType: {} as {
+    payloadType: {} as {
       path: string,
       violations: string[]
     }[]
@@ -245,7 +245,7 @@ import { InvalidData } from "@problemDetails/ProblemDetailsCollection"
 
 function throwInvalidData() {
     throw InvalidData({
-        data: [
+        payload: [
             {
                 path: "email",
                 violations: ["Must not be empty", "Must be a valid email"]
@@ -255,7 +255,7 @@ function throwInvalidData() {
 }
 ```
 
-4️⃣ Work with the data in a type safe manner:
+4️⃣ Work with the payload in a type safe manner:
 ```typescript
 import { ProblemDetails } from "@tectonique/api-standards"
 import ProblemDetailsCollection from "@problemDetails/ProblemDetailsCollection"
@@ -271,7 +271,7 @@ try {
     const problemDetail = error as ProblemDetailSuperType
     
     if ( problemDetail.type === "invalid-data" ) {
-      const message = problemDetail.data.map(entry => {
+      const message = problemDetail.payload.map(entry => {
         return `[${entry.path}]: ${entry.violations.join(', ')}`
       }).join(' – ')
       
@@ -308,7 +308,7 @@ export default {
       })
       
       return {
-        data: messages,
+        payload: messages,
         detail: messages.join(' – ')
       }
     }
@@ -347,7 +347,7 @@ try {
     
     if ( problemDetail.type === "invalid-data" ) {
       // Here we use the message array ...
-      console.error("Invalid data:", problemDetail.data)
+      console.error("Invalid data:", problemDetail.payload)
       
       // ... and here the pre-joined detail message!
       alert('Data is invalid: ' + problemDetail.detail)

@@ -5,7 +5,7 @@ const UntypedCollectionA = {
     type: "not-found",
     title: "Not found",
     status: 404,
-    dataType: {} as number,
+    payloadType: {} as number,
   }),
   Unauthorized: ProblemDetails.factory({
     type: "unauthorized",
@@ -24,7 +24,7 @@ const UntypedCollectionB = {
     status: 442,
     generator: ({ input }: { input: number }) => {
       return {
-        data: {
+        payload: {
           input,
           squared: input * input,
         },
@@ -39,7 +39,7 @@ const collection = {
 };
 
 // Here you can see, that a `data` attribute is needed
-const testProblem1 = collection.NotFound({ detail: "PD 1", data: 1 });
+const testProblem1 = collection.NotFound({ detail: "PD 1", payload: 1 });
 
 // If `dataType` is not used, `data` can be omitted ...
 // or even the complete object, as detail is also optional.
@@ -69,7 +69,7 @@ if (genericallyTypedProblem.type === "not-found") {
 } else if (genericallyTypedProblem.type === "custom") {
   console.log(
     "Dummy message: Test. Squared output: ",
-    genericallyTypedProblem.data.squared
+    genericallyTypedProblem.payload.squared
   );
 }
 

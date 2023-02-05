@@ -6,6 +6,7 @@
 * [📜 Changelog](#-changelog)
 * [📖 Table of contents](#-table-of-contents)
 * [0.x.y](#0xy)
+  * [0.0.7](#007)
   * [0.0.6](#006)
   * [0.0.5](#005)
   * [0.0.4](#004)
@@ -15,6 +16,10 @@
 <!-- TOC -->
 
 # 0.x.y
+
+## 0.0.7
+- `data` field for payload is now named `payload` to be more explicit.
+- Renamed all generic types `DATA` to `PAYLOAD`.
 
 ## 0.0.6
 - Keywords and description in package.json.

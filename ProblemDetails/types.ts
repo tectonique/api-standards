@@ -2,7 +2,7 @@ export type ProblemDetail<
   STATUS extends number,
   TYPE extends string,
   TITLE extends string,
-  DATA = undefined
+  PAYLOAD = undefined
 > = {
   success: false;
   status: STATUS;
@@ -10,39 +10,43 @@ export type ProblemDetail<
   title: TITLE;
   instance: string;
   detail: string;
-} & (DATA extends undefined ? { data?: undefined } : { data: DATA });
+} & (PAYLOAD extends undefined
+  ? { payload?: undefined }
+  : { payload: PAYLOAD });
 
-export type ProblemDetailFactoryProps<DATA = undefined> = {
+export type ProblemDetailFactoryProps<PAYLOAD = undefined> = {
   detail?: string;
-} & (DATA extends undefined ? { data?: undefined } : { data: DATA });
+} & (PAYLOAD extends undefined
+  ? { payload?: undefined }
+  : { payload: PAYLOAD });
 
 export type ProblemDetailFactory<
   STATUS extends number,
   TYPE extends string,
   TITLE extends string,
-  DATA = undefined,
-  GENERATOR_PROPS extends unknown[] = DATA extends undefined
-    ? [factoryProps?: ProblemDetailFactoryProps<DATA>]
-    : [factoryProps: ProblemDetailFactoryProps<DATA>]
+  PAYLOAD = undefined,
+  GENERATOR_PROPS extends unknown[] = PAYLOAD extends undefined
+    ? [factoryProps?: ProblemDetailFactoryProps<PAYLOAD>]
+    : [factoryProps: ProblemDetailFactoryProps<PAYLOAD>]
 > = (
   ...optionalFactoryProps: GENERATOR_PROPS
-) => ProblemDetail<STATUS, TYPE, TITLE, DATA>;
+) => ProblemDetail<STATUS, TYPE, TITLE, PAYLOAD>;
 
 export type ProblemDetailFactoryCollection<
   KEY extends string,
   STATUS extends number,
   TYPE extends string,
   TITLE extends string,
-  DATA = undefined,
-  GENERATOR_PROPS extends unknown[] = DATA extends undefined
-    ? [factoryProps?: ProblemDetailFactoryProps<DATA>]
-    : [factoryProps: ProblemDetailFactoryProps<DATA>]
+  PAYLOAD = undefined,
+  GENERATOR_PROPS extends unknown[] = PAYLOAD extends undefined
+    ? [factoryProps?: ProblemDetailFactoryProps<PAYLOAD>]
+    : [factoryProps: ProblemDetailFactoryProps<PAYLOAD>]
 > = {
   [key in KEY]: ProblemDetailFactory<
     STATUS,
     TYPE,
     TITLE,
-    DATA,
+    PAYLOAD,
     GENERATOR_PROPS
   >;
 };

@@ -4,7 +4,7 @@
   "description": "TypeScript utilities for creating end to end type safe APIs with RFC 7807 (Problem Details) based error handling.",
   "keywords": ["typesafety", "envelope", "api", "problemdetails", "rfc7807", "7807"],
   "author": "Peter Kuhmann",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "types": "dist/mjs/index.d.ts",
   "main": "dist/cjs/index.js",
   "module": "dist/mjs/index.js",

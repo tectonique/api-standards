@@ -9,26 +9,26 @@ export function createProblemDetailFactory<
   STATUS extends number,
   TYPE extends string,
   TITLE extends string,
-  DATA = undefined,
-  GENERATOR_PROPS extends unknown[] = DATA extends undefined
-    ? [factoryProps?: ProblemDetailFactoryProps<DATA>]
-    : [factoryProps: ProblemDetailFactoryProps<DATA>]
+  PAYLOAD = undefined,
+  GENERATOR_PROPS extends unknown[] = PAYLOAD extends undefined
+    ? [factoryProps?: ProblemDetailFactoryProps<PAYLOAD>]
+    : [factoryProps: ProblemDetailFactoryProps<PAYLOAD>]
 >(props: {
   type: TYPE;
   status: STATUS;
   title: TITLE;
-  dataType?: DATA;
+  payloadType?: PAYLOAD;
   generator?: (
     ...generatorProps: GENERATOR_PROPS
-  ) => ProblemDetailFactoryProps<DATA>;
-}): ProblemDetailFactory<STATUS, TYPE, TITLE, DATA, GENERATOR_PROPS> {
+  ) => ProblemDetailFactoryProps<PAYLOAD>;
+}): ProblemDetailFactory<STATUS, TYPE, TITLE, PAYLOAD, GENERATOR_PROPS> {
   return function (
     ...optionalFactoryProps: GENERATOR_PROPS
-  ): ProblemDetail<STATUS, TYPE, TITLE, DATA> {
-    const finalFactoryProps: ProblemDetailFactoryProps<DATA> =
+  ): ProblemDetail<STATUS, TYPE, TITLE, PAYLOAD> {
+    const finalFactoryProps: ProblemDetailFactoryProps<PAYLOAD> =
       typeof props.generator === "function"
         ? props.generator(...optionalFactoryProps)
-        : (optionalFactoryProps[0] as ProblemDetailFactoryProps<DATA>);
+        : (optionalFactoryProps[0] as ProblemDetailFactoryProps<PAYLOAD>);
 
     return {
       success: false,
@@ -38,8 +38,10 @@ export function createProblemDetailFactory<
       instance: `urn:uuid:${uuidv4()}`,
       detail: finalFactoryProps?.detail ?? props.title,
       ...({
-        data: finalFactoryProps?.data,
-      } as DATA extends undefined ? { data?: undefined } : { data: DATA }),
+        payload: finalFactoryProps?.payload,
+      } as PAYLOAD extends undefined
+        ? { payload?: undefined }
+        : { payload: PAYLOAD }),
     };
   };
 }
@@ -48,7 +50,7 @@ export function createInstanceWithInferredTypes<
   STATUS extends number,
   TYPE extends string,
   TITLE extends string,
-  DATA = undefined
->(problemDetail: ProblemDetail<STATUS, TYPE, TITLE, DATA>) {
+  PAYLOAD = undefined
+>(problemDetail: ProblemDetail<STATUS, TYPE, TITLE, PAYLOAD>) {
   return problemDetail;
 }
