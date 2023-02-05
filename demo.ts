@@ -1,13 +1,13 @@
 import { ProblemDetails } from "./index";
 
 const UntypedCollectionA = {
-  NotFound: ProblemDetails.define({
+  NotFound: ProblemDetails.factory({
     type: "not-found",
     title: "Not found",
     status: 404,
     dataType: {} as number,
   }),
-  Unauthorized: ProblemDetails.define({
+  Unauthorized: ProblemDetails.factory({
     type: "unauthorized",
     title: "Unauthorized",
     status: 401,
@@ -15,10 +15,10 @@ const UntypedCollectionA = {
 };
 
 const UntypedCollectionB = {
-  Test: ProblemDetails.define({ type: "test", title: "Test", status: 442 }),
+  Test: ProblemDetails.factory({ type: "test", title: "Test", status: 442 }),
 
   // It's also possible to define custom generators.
-  Custom: ProblemDetails.define({
+  Custom: ProblemDetails.factory({
     type: "custom",
     title: "Custom",
     status: 442,
@@ -77,10 +77,37 @@ if (genericallyTypedProblem.type === "not-found") {
 // if a certain object is a ProblemDetail instance.
 console.log(
   "Is problem detail 1? (should be true):",
-  ProblemDetails.isInstance(genericallyTypedProblem)
+  ProblemDetails.isOne(genericallyTypedProblem)
 );
 
 console.log(
   "Is problem detail 2? (should be false):",
-  ProblemDetails.isInstance({})
+  ProblemDetails.isOne({})
+);
+
+const nonFactoryProblemDetailInstance = ProblemDetails.create({
+  success: false,
+  status: 431,
+  type: "hello-world",
+  title: "Hello World",
+  detail: "Hello World",
+  instance: `urn:timestamp:${new Date().getTime()}`,
+});
+
+const thisHereIsTheLongForm: ProblemDetails.ProblemDetail<
+  431,
+  "hello-world",
+  "Hello World"
+> = {
+  success: false,
+  status: 431,
+  type: "hello-world",
+  title: "Hello World",
+  detail: "Hello World",
+  instance: `urn:timestamp:${new Date().getTime()}`,
+};
+
+console.log(
+  "Non factory instance: isOne()?",
+  ProblemDetails.isOne(nonFactoryProblemDetailInstance)
 );

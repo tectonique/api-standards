@@ -53,9 +53,18 @@ Please head over to: [Problem Details Docs 🔗](./ProblemDetails/README.md)
 Here yo go: [Changelog 🔗](CHANGELOG.md)
 
 # 🦔 Author
+<p align="center">
+  <b>Peter Kuhmann</b>
+  <br>
+  <a href="https://github.com/hedgehogs-mind">GitHub: hedgehogs-mind</a>
+  <br>
+</p>
 
-Peter Kuhmann
-<br>[hedgehogs-mind @ GitHub](https://github.com/hedgehogs-mind)
-<br>Tectonique
+<hr>
 
-![Tectonique Logo](.assets/tectonique-small.png)
+<p align="center">
+  <b>Tectonique</b>
+  <br>
+  <br>
+  <img src=".assets/tectonique-small.png" alt="Tectonique logo" width="300">
+</p>

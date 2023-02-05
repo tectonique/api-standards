@@ -1,4 +1,5 @@
-export { createProblemDetailFactory as define } from "./functions";
+export { createProblemDetailFactory as factory } from "./functions";
+export { createInstanceWithInferredTypes as create } from "./functions";
 
 export { InferProblemDetailsFromFactoryCollection as infer } from "./types";
 
@@ -9,4 +10,4 @@ export {
   ProblemDetailFactoryProps,
 } from "./types";
 
-export { ProblemDetailClazz, isProblemDetail as isInstance } from "./helpers";
+export { matchesProblemDetailSchema as isOne } from "./helpers";

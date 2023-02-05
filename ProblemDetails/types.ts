@@ -10,8 +10,7 @@ export type ProblemDetail<
   title: TITLE;
   instance: string;
   detail: string;
-  data: DATA;
-};
+} & (DATA extends undefined ? { data?: undefined } : { data: DATA });
 
 export type ProblemDetailFactoryProps<DATA = undefined> = {
   detail?: string;

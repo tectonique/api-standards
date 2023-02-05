@@ -4,7 +4,6 @@ import {
   ProblemDetailFactoryProps,
 } from "./types";
 import { v4 as uuidv4 } from "uuid";
-import { ProblemDetailClazz } from "./helpers";
 
 export function createProblemDetailFactory<
   STATUS extends number,
@@ -31,13 +30,25 @@ export function createProblemDetailFactory<
         ? props.generator(...optionalFactoryProps)
         : (optionalFactoryProps[0] as ProblemDetailFactoryProps<DATA>);
 
-    return new ProblemDetailClazz(
-      props.status,
-      props.type,
-      props.title,
-      `urn:uuid:${uuidv4()}`,
-      finalFactoryProps?.detail ?? props.title,
-      finalFactoryProps?.data as DATA
-    );
+    return {
+      success: false,
+      status: props.status,
+      type: props.type,
+      title: props.title,
+      instance: `urn:uuid:${uuidv4()}`,
+      detail: finalFactoryProps?.detail ?? props.title,
+      ...({
+        data: finalFactoryProps?.data,
+      } as DATA extends undefined ? { data?: undefined } : { data: DATA }),
+    };
   };
+}
+
+export function createInstanceWithInferredTypes<
+  STATUS extends number,
+  TYPE extends string,
+  TITLE extends string,
+  DATA = undefined
+>(problemDetail: ProblemDetail<STATUS, TYPE, TITLE, DATA>) {
+  return problemDetail;
 }

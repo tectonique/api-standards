@@ -1,6 +1,6 @@
 # ⚠️ Problem Details
 
-Problem Details are RFC that defines a common data structure for errors
+Problem Details are RFC that factorys a common data structure for errors
 occurring on the server side.
 
 The goal is to provide clients a clear way to handle errors – especially
@@ -25,13 +25,14 @@ Here is the RFC specification: [RFC 7807 Problem Details 🔗](https://www.rfc-e
   * [⚡️ Use the inferred Super Type](#-use-the-inferred-super-type)
   * [🔢 Use typed payloads](#-use-typed-payloads)
   * [🏭 Use custom factory properties](#-use-custom-factory-properties)
+  * [🔨 Creating typed instances without factories](#-creating-typed-instances-without-factories)
 <!-- TOC -->
 
 # 🤔 What will you set up?
 
 You will:
 1. **create various Problem Detail types**, that you can safely throw.
-2. **create a collection** that contains all Problem Detail types you defined.
+2. **create a collection** that contains all Problem Detail types you factoryd.
 3. learn how to **throw a Problem Detail**.
 4. **infer a "super type"** that represents all possible Problem Details
 
@@ -78,7 +79,7 @@ This documentation/library uses some terminology, that you should know:
 | Term                      | Explanation                                                                                                                                                                                                                       |
 |---------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Problem Detail            | An object instance that carries all the attributes explained above in "Structure". Such an instance shall be thrown/send back to the caller.                                                                                      |
-| Problem Detail Factory    | A "Problem Detail Factory" is a reusable function. For every Problem Detail type you define one factory. You then can use the factory to create instance of the Problem Detail type.                                              |
+| Problem Detail Factory    | A "Problem Detail Factory" is a reusable function. For every Problem Detail type you factory one factory. You then can use the factory to create instance of the Problem Detail type.                                             |
 | Problem Detail Collection | A "Problem Detail Collection" is a plain object that holds all of your Problem Detail Types / Factories.                                                                                                                          |
 | Inferred Super Type       | To get type safety on the frontend by just checking a Problem Detail's `type` field (and e.g. correctly accessing payload), you need to infer your generic "ProblemDetail" type that represents all of your Problem Detail types. | 
 
@@ -104,7 +105,7 @@ In `auth.ts` write:
 import { ProblemDetails } from "@tectonique/api-standards"
 
 export default {
-  Unauthorized: ProblemDetails.define({
+  Unauthorized: ProblemDetails.factory({
     status: 401,
     type: "unauthorized",
     title: "Unauthorized"
@@ -117,7 +118,7 @@ In `base.ts` write:
 import { ProblemDetails } from "@tectonique/api-standards"
 
 export default {
-  InternalServerError: ProblemDetails.define({
+  InternalServerError: ProblemDetails.factory({
     status: 500,
     type: "internal-server-error",
     title: "Internal Server Error"
@@ -157,7 +158,7 @@ function throwInternalServerError(message: string) {
 ## 🔎 Is it a Problem Detail?
 Imagine you want to handle thrown Problem Details and send them back
 to as an HTTP response. You can check if an object is a Problem Detail instance
-with `ProblemDetails.isInstance`:
+with `ProblemDetails.isOne(...)`:
 
 ```typescript
 import { ProblemDetails } from "@tectonique/api-standards"
@@ -165,7 +166,7 @@ import { ProblemDetails } from "@tectonique/api-standards"
 try {
   // ...
 } catch ( e: unknown ) {
-  if ( ProblemDetails.isInstance(e) ) {
+  if ( ProblemDetails.isOne(e) ) {
     // Handle Problem Detail instance.
   }
   
@@ -173,6 +174,11 @@ try {
   throw e;
 }
 ```
+
+The method `isOne(...)` checks if the given value is
+- an object
+- and matches the ProblemDetail schema (including the `success: false` flag).
+
 
 ## ⚡️ Use the inferred Super Type
 Check out the following code. It
@@ -190,7 +196,7 @@ type ProblemDetailSuperType = ProblemDetails.infer<typeof ProblemDetailsCollecti
 try {
   // ...
 } catch ( error ) {
-  if ( problemDetails.isInstance(error) ) {
+  if ( problemDetails.isOne(error) ) {
     const problemDetail = error as ProblemDetailSuperType
     
     if ( problemDetail.type === "internal-server-error" ) {
@@ -210,7 +216,7 @@ Okay, here comes the real power: **_Typed payload!_** 💪
 import { ProblemDetails } from "@tectonique/api-standards"
 
 export default {
-  InvalidData: ProblemDetails.define({
+  InvalidData: ProblemDetails.factory({
     status: 422,
     type: "invalid-data",
     title: "Invalid data",
@@ -261,7 +267,7 @@ type ProblemDetailSuperType = ProblemDetails.infer<typeof ProblemDetailsCollecti
 try {
   // ...
 } catch ( error ) {
-  if ( problemDetails.isInstance(error) ) {
+  if ( problemDetails.isOne(error) ) {
     const problemDetail = error as ProblemDetailSuperType
     
     if ( problemDetail.type === "invalid-data" ) {
@@ -291,7 +297,7 @@ type Violation = {
 }
 
 export default {
-  InvalidData: ProblemDetails.define({
+  InvalidData: ProblemDetails.factory({
     status: 422,
     type: "invalid-data",
     title: "Invalid data",
@@ -336,7 +342,7 @@ type ProblemDetailSuperType = ProblemDetails.infer<typeof ProblemDetailsCollecti
 try {
   // ...
 } catch ( error ) {
-  if ( problemDetails.isInstance(error) ) {
+  if ( problemDetails.isOne(error) ) {
     const problemDetail = error as ProblemDetailSuperType
     
     if ( problemDetail.type === "invalid-data" ) {
@@ -350,4 +356,35 @@ try {
     }
   }
 }
+```
+
+## 🔨 Creating typed instances without factories
+In case you want to create a typed `ProblemDetail` object,
+use `ProblemdDetails.create(data)`. This method helps with inferring types:
+
+```typescript
+const nonFactoryProblemDetailInstance = ProblemDetails.create({
+  success: false,
+  status: 431,
+  type: "hello-world",
+  title: "Hello World",
+  detail: "Hello World",
+  instance: `urn:timestamp:${new Date().getTime()}`,
+});
+```
+
+It does the same as:
+```typescript
+const thisHereIsTheLongForm: ProblemDetails.ProblemDetail<
+  431,
+  "hello-world",
+  "Hello World"
+> = {
+  success: false,
+  status: 431,
+  type: "hello-world",
+  title: "Hello World",
+  detail: "Hello World",
+  instance: `urn:timestamp:${new Date().getTime()}`,
+};
 ```

@@ -1,38 +1,17 @@
-import { ProblemDetail } from "./types";
-
-export class ProblemDetailClazz<
-  STATUS extends number,
-  TYPE extends string,
-  TITLE extends string,
-  DATA = undefined
-> implements ProblemDetail<STATUS, TYPE, TITLE, DATA>
-{
-  success: false;
-  status: STATUS;
-  type: TYPE;
-  title: TITLE;
-  instance: string;
-  detail: string;
-  data: DATA;
-
-  constructor(
-    status: STATUS,
-    type: TYPE,
-    title: TITLE,
-    instance: string,
-    detail: string,
-    data: DATA
-  ) {
-    this.success = false;
-    this.status = status;
-    this.type = type;
-    this.title = title;
-    this.instance = instance;
-    this.detail = detail;
-    this.data = data;
+export function matchesProblemDetailSchema(data: unknown) {
+  if (!data || typeof data !== "object") {
+    return false;
   }
-}
 
-export function isProblemDetail(data: unknown) {
-  return data instanceof ProblemDetailClazz;
+  const obj = data as { [key: string]: unknown };
+
+  // As the payload is optional, it's not necessary to check for it.
+  return (
+    obj.success === false &&
+    typeof obj.status === "number" &&
+    typeof obj.type === "string" &&
+    typeof obj.title === "string" &&
+    typeof obj.detail === "string" &&
+    typeof obj.instance === "string"
+  );
 }

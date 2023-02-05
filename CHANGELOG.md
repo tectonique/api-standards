@@ -6,6 +6,8 @@
 * [📜 Changelog](#-changelog)
 * [📖 Table of contents](#-table-of-contents)
 * [0.x.y](#0xy)
+  * [0.0.6](#006)
+  * [0.0.5](#005)
   * [0.0.4](#004)
   * [0.0.3](#003)
   * [0.0.2](#002)
@@ -13,6 +15,15 @@
 <!-- TOC -->
 
 # 0.x.y
+
+## 0.0.6
+- Keywords and description in package.json.
+- Dropped helper class `ProblemDetailClazz`.
+- `isInstance` is now `isOne` and just checks for the schema.
+- New: Method `ProblemDetails.create(data)` allows to create a typed `ProblemDetail` object with inferred types from the `data` parameter.
+
+## 0.0.5
+- Updated package.json to include repository URL.
 
 ## 0.0.4
 - Custom `generator` option.
