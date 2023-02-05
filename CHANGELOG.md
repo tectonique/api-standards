@@ -6,6 +6,7 @@
 * [📜 Changelog](#-changelog)
 * [📖 Table of contents](#-table-of-contents)
 * [0.x.y](#0xy)
+  * [0.0.8](#008)
   * [0.0.7](#007)
   * [0.0.6](#006)
   * [0.0.5](#005)
@@ -16,6 +17,15 @@
 <!-- TOC -->
 
 # 0.x.y
+
+## 0.0.8
+- Removed `TITLE` generic type from ProblemDetails.
+- Added ResponseEnvelopes code
+  - success envelopes
+  - generic envelopes (either success or problem detail)
+  - checker functions
+  - create function
+  - docs
 
 ## 0.0.7
 - `data` field for payload is now named `payload` to be more explicit.

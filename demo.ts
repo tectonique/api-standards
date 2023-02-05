@@ -1,4 +1,5 @@
-import { ProblemDetails } from "./index";
+import { ProblemDetails, ResponseEnvelopes } from "./index";
+import { SuccessEnvelope } from "./ResponseEnvelopes";
 
 const UntypedCollectionA = {
   NotFound: ProblemDetails.factory({
@@ -53,9 +54,9 @@ console.log("PD 2:", testProblem2);
 console.log("PD 3:", testProblem3);
 console.log("PD 3:", testProblem4);
 
-type ProblemDetailType = ProblemDetails.infer<typeof collection>;
+type ProblemDetailSuperType = ProblemDetails.infer<typeof collection>;
 
-const genericallyTypedProblem = testProblem1 as ProblemDetailType;
+const genericallyTypedProblem = testProblem1 as ProblemDetailSuperType;
 
 // Here you can see, that the `type` is strictly typed
 if (genericallyTypedProblem.type === "not-found") {
@@ -108,3 +109,50 @@ console.log(
   "Non factory instance: isOne()?",
   ProblemDetails.isOne(nonFactoryProblemDetailInstance)
 );
+
+console.log(
+  "Non factory instance (long form): isOne()?",
+  ProblemDetails.isOne(thisHereIsTheLongForm)
+);
+
+// And now here comes the beauty with envelopes:
+const someResponse1: SuccessEnvelope = {
+  success: true,
+  status: 200,
+};
+
+type Response2Payload = { userName: string };
+
+const someResponse2 = ResponseEnvelopes.success<Response2Payload>(200, {
+  userName: "Peter",
+});
+
+// We wrap the response using the Envelope type.
+// > here we don't have an expected payload type (by default undefined is used).
+const envelope1 =
+  someResponse1 as ResponseEnvelopes.Envelope<ProblemDetailSuperType>;
+
+// But here we add the expected success payload type
+const envelope2 = someResponse2 as ResponseEnvelopes.Envelope<
+  ProblemDetailSuperType,
+  Response2Payload
+>;
+
+// And now we can check the envelopes in a type safe way?
+// - Success?
+//  > yes: Work with typed payload?
+//  > no: Check "type" field?
+//    > Evaluate Problem Detail
+if (envelope1.success) {
+  console.log("Envelope 1 > Success!");
+} else {
+  console.log("Envelope 1 > Failure:", envelope1.status, envelope1.title);
+}
+
+if (envelope2.success) {
+  console.log("Envelope 2 > Success! User name:", envelope2.payload.userName);
+} else {
+  if (envelope2.type === "unauthorized") {
+    throw new Error("Authorization expired.");
+  }
+}

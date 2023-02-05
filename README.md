@@ -12,18 +12,16 @@ The library advocates:
 <!-- TOC -->
 * [🌩 API Standards](#-api-standards)
 * [📖 Table of contents](#-table-of-contents)
-* [📦 Package](#-package)
+* [📦 NPM Package](#-npm-package)
 * [💾 Installation](#-installation)
 * [📑 Documentation](#-documentation)
-  * [📨 Response Envelopes (WIP)](#-response-envelopes--wip-)
   * [⚠️ Problem Details](#-problem-details)
+  * [📨 Response Envelopes](#-response-envelopes)
 * [📜 Changelog](#-changelog)
 * [🦔 Author](#-author)
 <!-- TOC -->
 
-# 📦 Package
-
-Here you go: [NPM package 🔗](https://www.npmjs.com/package/@tectonique/api-standards)
+# [📦 NPM Package](https://www.npmjs.com/package/@tectonique/api-standards)
 
 # 💾 Installation
 
@@ -37,20 +35,54 @@ Using yarn:
 yarn add @tectonique/api-standards
 ```
 
+# 🏁 Goal
+The goal of the library is to help you create type safe code like this:
+```typescript
+import { ResponseEnvelopes } from "@tectonique/api-standards"
+
+// Import response and error (problem detail) types
+import { ProblemDetailSuperType } from "@backend/ProblemDetailSuperType"
+import { API_GetUsers_Response } from "@backend/ApiResponses"
+
+// Make the API call
+const data = await axios.get("/api/users")
+  .then((response) => response.data)
+  .catch((error) => error.response.data)
+
+// Check and inspect envelope
+if ( ResponseEnvelopes.isEnvelope(data) ) {
+  const envelope = data as ResponseEnvelopes.Envelope<
+    ProblemDetailSuperType,
+    API_GetUsers_Response
+  >
+  
+  // Success envelope ... obviously ^^
+  if ( envelope.success ) {
+    console.log(
+      "User email adresses:",
+      envelope.payload.map(user => user.email).join(', ')
+    )
+    
+  // Problem detail
+  } else if ( envelope.type === "unauthorized" ) {
+    throw new Error("Session expired")
+    
+  } else {
+    throw new Error("Unhandled problem detail: " + envelope.type)
+  }
+  
+} else {
+  throw new Error("Didn't receive an envelope")
+}
+```
+
 # 📑 Documentation
 
-## 📨 Response Envelopes (WIP)
+## [⚠️ Problem Details](./ProblemDetails/README.md)
 
-_Work in progress._ ⏳
+## [📨 Response Envelopes](./ResponseEnvelopes/README.md)
 
-## ⚠️ Problem Details
-
-Please head over to: [Problem Details Docs 🔗](./ProblemDetails/README.md)
-
-
-# 📜 Changelog
-
-Here yo go: [Changelog 🔗](CHANGELOG.md)
+# [📜 Changelog](CHANGELOG.md)
 
 # 🦔 Author
 <p align="center">
@@ -58,11 +90,8 @@ Here yo go: [Changelog 🔗](CHANGELOG.md)
   <br>
   <a href="https://github.com/hedgehogs-mind">GitHub: hedgehogs-mind</a>
   <br>
-</p>
-
-<hr>
-
-<p align="center">
+  <br>
+  <br>
   <b>Tectonique</b>
   <br>
   <br>
