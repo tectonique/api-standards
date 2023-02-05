@@ -14,6 +14,7 @@ The library advocates:
 * [📖 Table of contents](#-table-of-contents)
 * [📦 NPM Package](#-npm-package)
 * [💾 Installation](#-installation)
+* [🏁 Goal](#-goal)
 * [📑 Documentation](#-documentation)
   * [⚠️ Problem Details](#-problem-details)
   * [📨 Response Envelopes](#-response-envelopes)

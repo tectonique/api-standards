@@ -1,4 +1,5 @@
 dist
+.idea
 
 # Created by https://www.toptal.com/developers/gitignore/api/yarn,node,visualstudiocode,intellij+all
 # Edit at https://www.toptal.com/developers/gitignore?templates=yarn,node,visualstudiocode,intellij+all
