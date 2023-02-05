@@ -1,6 +1,8 @@
 {
   "name": "@tectonique/api-standards",
-  "version": "0.0.3",
+  "repository": "https://github.com/tectonique/api-standards",
+  "author": "Peter Kuhmann",
+  "version": "0.0.5",
   "types": "dist/mjs/index.d.ts",
   "main": "dist/cjs/index.js",
   "module": "dist/mjs/index.js",
@@ -10,7 +12,6 @@
       "require": "./dist/cjs/index.js"
     }
   },
-
   "files": [
     "/dist"
   ],
