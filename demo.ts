@@ -94,18 +94,15 @@ const nonFactoryProblemDetailInstance = ProblemDetails.create({
   instance: `urn:timestamp:${new Date().getTime()}`,
 });
 
-const thisHereIsTheLongForm: ProblemDetails.ProblemDetail<
-  431,
-  "hello-world",
-  "Hello World"
-> = {
-  success: false,
-  status: 431,
-  type: "hello-world",
-  title: "Hello World",
-  detail: "Hello World",
-  instance: `urn:timestamp:${new Date().getTime()}`,
-};
+const thisHereIsTheLongForm: ProblemDetails.ProblemDetail<431, "hello-world"> =
+  {
+    success: false,
+    status: 431,
+    type: "hello-world",
+    title: "Hello World",
+    detail: "Hello World",
+    instance: `urn:timestamp:${new Date().getTime()}`,
+  };
 
 console.log(
   "Non factory instance: isOne()?",

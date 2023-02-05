@@ -8,7 +8,6 @@ import { v4 as uuidv4 } from "uuid";
 export function createProblemDetailFactory<
   STATUS extends number,
   TYPE extends string,
-  TITLE extends string,
   PAYLOAD = undefined,
   GENERATOR_PROPS extends unknown[] = PAYLOAD extends undefined
     ? [factoryProps?: ProblemDetailFactoryProps<PAYLOAD>]
@@ -16,15 +15,15 @@ export function createProblemDetailFactory<
 >(props: {
   type: TYPE;
   status: STATUS;
-  title: TITLE;
+  title: string;
   payloadType?: PAYLOAD;
   generator?: (
     ...generatorProps: GENERATOR_PROPS
   ) => ProblemDetailFactoryProps<PAYLOAD>;
-}): ProblemDetailFactory<STATUS, TYPE, TITLE, PAYLOAD, GENERATOR_PROPS> {
+}): ProblemDetailFactory<STATUS, TYPE, PAYLOAD, GENERATOR_PROPS> {
   return function (
     ...optionalFactoryProps: GENERATOR_PROPS
-  ): ProblemDetail<STATUS, TYPE, TITLE, PAYLOAD> {
+  ): ProblemDetail<STATUS, TYPE, PAYLOAD> {
     const finalFactoryProps: ProblemDetailFactoryProps<PAYLOAD> =
       typeof props.generator === "function"
         ? props.generator(...optionalFactoryProps)
@@ -49,8 +48,7 @@ export function createProblemDetailFactory<
 export function createInstanceWithInferredTypes<
   STATUS extends number,
   TYPE extends string,
-  TITLE extends string,
   PAYLOAD = undefined
->(problemDetail: ProblemDetail<STATUS, TYPE, TITLE, PAYLOAD>) {
+>(problemDetail: ProblemDetail<STATUS, TYPE, PAYLOAD>) {
   return problemDetail;
 }

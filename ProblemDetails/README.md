@@ -378,12 +378,10 @@ It does the same as:
 const thisHereIsTheLongForm: ProblemDetails.ProblemDetail<
   431,
   "hello-world",
-  "Hello World"
 > = {
   success: false,
   status: 431,
   type: "hello-world",
-  title: "Hello World",
   detail: "Hello World",
   instance: `urn:timestamp:${new Date().getTime()}`,
 };
