@@ -50,7 +50,10 @@ export function createInstanceWithInferredTypes<
   TYPE extends string,
   PAYLOAD = undefined
 >(
-  problemDetail: Omit<ProblemDetail<STATUS, TYPE, PAYLOAD>, "instance">
+  problemDetail: Omit<
+    ProblemDetail<STATUS, TYPE, PAYLOAD>,
+    "instance" | "success"
+  >
 ): ProblemDetail<STATUS, TYPE, PAYLOAD> {
   return {
     success: false,

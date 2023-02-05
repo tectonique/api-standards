@@ -6,6 +6,7 @@
 * [📜 Changelog](#-changelog)
 * [📖 Table of contents](#-table-of-contents)
 * [0.x.y](#0xy)
+  * [0.0.12](#0012)
   * [0.0.11](#0011)
   * [0.0.10](#0010)
   * [0.0.9](#009)
@@ -20,6 +21,9 @@
 <!-- TOC -->
 
 # 0.x.y
+
+## 0.0.12
+- `ProblemDetails.create(data)` attribute `data` must not contain anymore an `success` value. It's instead auto generated.
 
 ## 0.0.11
 - `ProblemDetails.create(data)` attribute `data` must not contain anymore an `instance` value. It's instead auto generated.

@@ -364,7 +364,6 @@ use `ProblemdDetails.create(data)`. This method helps with inferring types:
 
 ```typescript
 const nonFactoryProblemDetailInstance = ProblemDetails.create({
-  success: false,
   status: 431,
   type: "hello-world",
   title: "Hello World",
