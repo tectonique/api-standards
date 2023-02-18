@@ -244,6 +244,7 @@ function isValid(
     payload?: any;
   }
 ) {
+  expect(problemDetail.success).toBe(false);
   expect(problemDetail.status).toBe(expected.status);
   expect(problemDetail.type).toBe(expected.type);
   expect(problemDetail.title).toBe(expected.title);
