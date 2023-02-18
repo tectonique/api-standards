@@ -1,7 +1,7 @@
 import { describe, expect, it } from "@jest/globals";
 import { matchesProblemDetailSchema } from "./helpers";
 
-describe("ProblemDetail helpers", () => {
+describe("ProblemDetail – helpers", () => {
   describe("matchesProblemDetailSchema(...)", () => {
     describe("Success", () => {
       it("No payload", () => {

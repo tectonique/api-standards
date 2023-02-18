@@ -5,7 +5,7 @@ import {
 } from "./functions";
 import * as uuid from "uuid";
 
-describe("ProblemDetails functions", () => {
+describe("ProblemDetails – functions", () => {
   describe("createProblemDetailFactory(...)", () => {
     it("Without payload", () => {
       const factory = createProblemDetailFactory({
