@@ -7,7 +7,7 @@
     "name" : "Peter Kuhmann",
     "email" : "peter@hedgehogs-mind.com"
   },
-  "version": "0.0.13",
+  "version": "0.0.14",
   "types": "dist/mjs/index.d.ts",
   "main": "dist/cjs/index.js",
   "module": "dist/mjs/index.js",
@@ -23,7 +23,9 @@
   "license": "MIT",
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && ./fixup.sh",
-    "dev": "tsx demo.ts"
+    "dev": "tsx demo.ts",
+    "test": "exit 1",
+    "prepublishOnly": "yarn test && yarn build"
   },
   "devDependencies": {
     "@types/uuid": "^9.0.0",

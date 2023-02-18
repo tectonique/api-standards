@@ -4,6 +4,7 @@ import {
   ProblemDetailFactoryProps,
 } from "./types";
 import { v4 as uuidv4 } from "uuid";
+import { matchesProblemDetailSchema } from "./helpers";
 
 export function createProblemDetailFactory<
   STATUS extends number,
@@ -21,7 +22,7 @@ export function createProblemDetailFactory<
     ...generatorProps: GENERATOR_PROPS
   ) => ProblemDetailFactoryProps<PAYLOAD>;
 }): ProblemDetailFactory<STATUS, TYPE, PAYLOAD, GENERATOR_PROPS> {
-  return function (
+  function NewProblemDetailFactory(
     ...optionalFactoryProps: GENERATOR_PROPS
   ): ProblemDetail<STATUS, TYPE, PAYLOAD> {
     const finalFactoryProps: ProblemDetailFactoryProps<PAYLOAD> =
@@ -42,7 +43,19 @@ export function createProblemDetailFactory<
         ? { payload?: undefined }
         : { payload: PAYLOAD }),
     };
-  };
+  }
+
+  Object.defineProperty(NewProblemDetailFactory, Symbol.hasInstance, {
+    value(instance: unknown) {
+      return (
+        matchesProblemDetailSchema(instance) &&
+        (<any>instance).status === props.status &&
+        (<any>instance).type === props.type
+      );
+    },
+  });
+
+  return NewProblemDetailFactory;
 }
 
 export function createInstanceWithInferredTypes<
