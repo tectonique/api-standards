@@ -5,6 +5,16 @@
   <br>
   <br>
 </p>
+<hr>
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/@tectonique/api-standards">
+    <img alt="npm" src="https://img.shields.io/npm/v/@tectonique/api-standards?color=%23e62770&label=NPM">
+  </a>
+  <a href="https://codecov.io/gh/tectonique/api-standards" > 
+   <img src="https://codecov.io/gh/tectonique/api-standards/branch/main/graph/badge.svg?token=L5O8JPNGQZ"/> 
+  </a>
+</p>
 
 # 🌩 API Standards
 
