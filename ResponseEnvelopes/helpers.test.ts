@@ -32,6 +32,10 @@ describe("ResponseEnvelopes – helpers", () => {
     });
 
     describe("Failure", () => {
+      it("Not an object", () => {
+        expect(matchesSuccessEnvelopeSchema("lala")).toBe(false);
+      });
+
       it("Success is false", () => {
         expect(
           matchesSuccessEnvelopeSchema({
