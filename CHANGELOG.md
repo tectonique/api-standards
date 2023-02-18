@@ -6,7 +6,7 @@
 * [📜 Changelog](#-changelog)
 * [📖 Table of contents](#-table-of-contents)
 * [0.x.y](#0xy)
-  * [0.0.14](#0014)
+  * [1.0.0](#100)
   * [0.0.13](#0013)
   * [0.0.12](#0012)
   * [0.0.11](#0011)
@@ -24,9 +24,11 @@
 
 # 0.x.y
 
-## 0.0.14
+## 1.0.0
 - `instanceof` support for ProblemDetail factories
 - Unit testing
+- NPM badge
+- unit test coverage badge + GitHub action reporting coverage
 
 ## 0.0.13
 - Fresh rebuild

@@ -14,7 +14,7 @@
     "name": "Peter Kuhmann",
     "email": "peter@hedgehogs-mind.com"
   },
-  "version": "0.0.14",
+  "version": "1.0.0",
   "types": "dist/mjs/index.d.ts",
   "main": "dist/cjs/index.js",
   "module": "dist/mjs/index.js",
