@@ -33,6 +33,7 @@
     "build": "rimraf dist && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && ./fixup.sh",
     "dev": "tsx demo.ts",
     "test": "jest",
+    "test:cov": "jest --coverage",
     "prepublishOnly": "yarn test && yarn build"
   },
   "devDependencies": {
